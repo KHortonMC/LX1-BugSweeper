@@ -8,7 +8,7 @@ class Grid {
     public Grid(int rows, int cols) { 
         this.rows = rows;
         this.cols = cols;
-        this.cells = new Cell[cols][rows]; // BUG #1: We have cols outside of rows here
+        this.cells = new Cell[rows][cols]; // BUG #1: We have cols outside of rows here
         initializeGrid();
     }
 
@@ -65,11 +65,15 @@ class Grid {
         }
         cells[row][col].isRevealed = true;
 
+        // Hacker Challenge: how can you inject a bug into this code to create stack overflow?
         if (cells[row][col].neighborBugCount == 0 && !cells[row][col].isBug) {
-            // Hacker Challenge: how can you inject a bug into this code to create stack overflow?
             for (int i = -1; i <= 1; i++) {
                 for (int j = -1; j <= 1; j++) {
-                    revealCell(row + i, col + j);
+                    int newRow = row + i;
+                    int newCol = col + j;
+                    if (isInBounds(newRow, newCol) && !cells[newRow][newCol].isRevealed) {
+                        revealCell(newRow, newCol);
+                    }
                 }
             }
         }
