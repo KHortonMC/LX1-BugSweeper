@@ -8,7 +8,7 @@ class Grid {
     public Grid(int rows, int cols) { 
         this.rows = rows;
         this.cols = cols;
-        this.cells = new Cell[rows][cols]; // BUG #1: We have cols outside of rows here
+        this.cells = new Cell[cols][rows]; // BUG #1: We have cols outside of rows here
         initializeGrid();
     }
 
